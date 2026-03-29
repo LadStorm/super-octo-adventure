@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="YT Transcript">
+  <meta name="theme-color" content="#ff0000">
+  <link rel="manifest" href="manifest.json">
+  <title>YT Transcript</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #ff0000;
+      --dark: #0f0f0f;
+      --card: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f1f1f1;
+      --muted: #aaa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100dvh;
+      padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 16px 0;
+    }
+
+    header svg { flex-shrink: 0; }
+
+    header h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    header h1 span { color: var(--red); }
+
+    .input-area {
+      padding: 16px;
+      display: flex;
+      gap: 8px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      padding: 12px 14px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--red);
+    }
+
+    input[type="text"]::placeholder { color: var(--muted); }
+
+    button#fetchBtn {
+      background: var(--red);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px 18px;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s;
+    }
+
+    button#fetchBtn:active { opacity: 0.75; }
+    button#fetchBtn:disabled { opacity: 0.45; cursor: default; }
+
+    #status {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 0 16px 10px;
+      min-height: 1.2em;
+    }
+
+    #status.error { color: #ff6b6b; }
+
+    .toolbar {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px 12px;
+    }
+
+    .toolbar.visible { display: flex; }
+
+    .toolbar-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    button.tb {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+    }
+
+    button.tb:active { background: var(--border); }
+
+    #transcript {
+      padding: 0 16px 32px;
+      display: none;
+    }
+
+    #transcript.visible { display: block; }
+
+    .segment {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .segment:last-child { border-bottom: none; }
+
+    .segment:active .seg-text { color: var(--red); }
+
+    .timestamp {
+      color: var(--red);
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      min-width: 44px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .seg-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      transition: color 0.1s;
+    }
+
+    .plain-text {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      padding: 14px;
+      width: 100%;
+      resize: vertical;
+      min-height: 200px;
+      display: none;
+    }
+
+    .plain-text.visible { display: block; }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <rect width="28" height="28" rx="7" fill="#ff0000"/>
+    <polygon points="11,8 21,14 11,20" fill="white"/>
+  </svg>
+  <h1>YT <span>Transcript</span></h1>
+</header>
+
+<div class="input-area">
+  <input type="text" id="urlInput" placeholder="YouTube URL or video ID" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="url">
+  <button id="fetchBtn" onclick="fetchTranscript()">Get</button>
+</div>
+
+<div id="status"></div>
+
+<div class="toolbar" id="toolbar">
+  <span class="toolbar-label" id="segCount"></span>
+  <button class="tb" id="viewToggle" onclick="toggleView()">Plain text</button>
+  <button class="tb" onclick="copyText()">Copy</button>
+</div>
+
+<div id="transcript"></div>
+<textarea class="plain-text" id="plainText" readonly></textarea>
+
+<script>
+const PROXY = 'https://api.allorigins.win/get?url=';
+
+function extractVideoId(input) {
+  input = input.trim();
+  // Plain ID (11 chars, alphanumeric + - _)
+  if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+  try {
+    const url = new URL(input.startsWith('http') ? input : 'https://' + input);
+    if (url.hostname.includes('youtu.be')) return url.pathname.slice(1).split(/[?&]/)[0];
+    if (url.hostname.includes('youtube.com')) {
+      const v = url.searchParams.get('v');
+      if (v) return v;
+      // shorts
+      const m = url.pathname.match(/\/shorts\/([a-zA-Z0-9_-]{11})/);
+      if (m) return m[1];
+    }
+  } catch (_) {}
+  // Fallback regex
+  const m = input.match(/(?:v=|youtu\.be\/|\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function formatTime(secs) {
+  const s = Math.floor(secs);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
+
+function setStatus(msg, isError = false) {
+  const el = document.getElementById('status');
+  el.innerHTML = msg;
+  el.className = isError ? 'error' : '';
+}
+
+function decodeHTML(str) {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)));
+}
+
+let segments = [];
+let viewMode = 'timed'; // 'timed' | 'plain'
+
+async function fetchTranscript() {
+  const input = document.getElementById('urlInput').value;
+  const videoId = extractVideoId(input);
+
+  if (!videoId) {
+    setStatus('Invalid YouTube URL or video ID.', true);
+    return;
+  }
+
+  const btn = document.getElementById('fetchBtn');
+  btn.disabled = true;
+  document.getElementById('toolbar').classList.remove('visible');
+  document.getElementById('transcript').classList.remove('visible');
+  document.getElementById('plainText').classList.remove('visible');
+  segments = [];
+
+  setStatus('<span class="spinner"></span>Fetching video page…');
+
+  try {
+    const pageUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    const proxyRes = await fetch(PROXY + encodeURIComponent(pageUrl));
+    if (!proxyRes.ok) throw new Error('Proxy error ' + proxyRes.status);
+    const data = await proxyRes.json();
+    const html = data.contents;
+
+    // Extract ytInitialPlayerResponse
+    const match = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\})\s*;/s);
+    if (!match) throw new Error('Could not parse video page. The video may be private or unavailable.');
+
+    let player;
+    try { player = JSON.parse(match[1]); }
+    catch (_) { throw new Error('Failed to parse player data.'); }
+
+    const captions = player?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+    if (!captions || captions.length === 0) {
+      throw new Error('No transcript available for this video.');
+    }
+
+    // Prefer manual English, then auto English, then first available
+    const preferred = captions.find(c => c.languageCode === 'en' && !c.kind) ||
+                      captions.find(c => c.languageCode === 'en') ||
+                      captions[0];
+
+    const trackUrl = preferred.baseUrl;
+    const trackName = preferred.name?.simpleText || preferred.languageCode;
+
+    setStatus(`<span class="spinner"></span>Fetching transcript (${trackName})…`);
+
+    const trackRes = await fetch(PROXY + encodeURIComponent(trackUrl));
+    if (!trackRes.ok) throw new Error('Failed to fetch transcript track.');
+    const trackData = await trackRes.json();
+    const xml = trackData.contents;
+
+    // Parse XML transcript
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xml, 'text/xml');
+    const textNodes = doc.querySelectorAll('text');
+
+    if (textNodes.length === 0) throw new Error('Transcript is empty.');
+
+    segments = Array.from(textNodes).map(node => ({
+      start: parseFloat(node.getAttribute('start') || '0'),
+      dur: parseFloat(node.getAttribute('dur') || '0'),
+      text: decodeHTML(node.textContent || '').replace(/\n/g, ' ').trim()
+    })).filter(s => s.text);
+
+    renderTranscript(videoId);
+    setStatus(`${segments.length} segments · ${trackName}`);
+
+  } catch (err) {
+    setStatus(err.message || 'Something went wrong.', true);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function renderTranscript(videoId) {
+  const container = document.getElementById('transcript');
+  container.innerHTML = '';
+
+  segments.forEach(seg => {
+    const div = document.createElement('div');
+    div.className = 'segment';
+    div.innerHTML = `<span class="timestamp">${formatTime(seg.start)}</span><span class="seg-text">${escapeHTML(seg.text)}</span>`;
+    div.addEventListener('click', () => {
+      const t = Math.floor(seg.start);
+      window.open(`https://youtu.be/${videoId}?t=${t}`, '_blank');
+    });
+    container.appendChild(div);
+  });
+
+  container.classList.add('visible');
+
+  const plain = segments.map(s => s.text).join(' ');
+  document.getElementById('plainText').value = plain;
+
+  document.getElementById('segCount').textContent = `${segments.length} segments`;
+  document.getElementById('toolbar').classList.add('visible');
+  document.getElementById('viewToggle').textContent = 'Plain text';
+  viewMode = 'timed';
+}
+
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toggleView() {
+  const tContainer = document.getElementById('transcript');
+  const pContainer = document.getElementById('plainText');
+  const btn = document.getElementById('viewToggle');
+
+  if (viewMode === 'timed') {
+    tContainer.classList.remove('visible');
+    pContainer.classList.add('visible');
+    btn.textContent = 'Timed view';
+    viewMode = 'plain';
+  } else {
+    pContainer.classList.remove('visible');
+    tContainer.classList.add('visible');
+    btn.textContent = 'Plain text';
+    viewMode = 'timed';
+  }
+}
+
+async function copyText() {
+  const text = segments.map(s => s.text).join(' ');
+  try {
+    await navigator.clipboard.writeText(text);
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  } catch (_) {
+    // fallback: select the textarea
+    toggleView();
+    const ta = document.getElementById('plainText');
+    ta.select();
+    document.execCommand('copy');
+  }
+}
+
+// Allow Enter key to submit
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') fetchTranscript();
+});
+</script>
+</body>
+</html>
