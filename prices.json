@@ -1,0 +1,456 @@
+{
+  "lastUpdated": "2026-04-14T08:00:00+10:00",
+  "note": "Prices are approximate national averages. Store availability and pricing vary by location. Always verify at the store.",
+  "items": [
+    {
+      "id": "full-cream-milk-2l",
+      "name": "Full Cream Milk 2L",
+      "category": "Dairy & Eggs",
+      "unit": "per 2L",
+      "woolworths": { "price": 3.50, "brand": "Woolworths" },
+      "coles": { "price": 3.30, "brand": "Coles" },
+      "aldi": { "price": 2.99, "brand": "Farmdale" }
+    },
+    {
+      "id": "skim-milk-2l",
+      "name": "Skim Milk 2L",
+      "category": "Dairy & Eggs",
+      "unit": "per 2L",
+      "woolworths": { "price": 3.50, "brand": "Woolworths" },
+      "coles": { "price": 3.30, "brand": "Coles" },
+      "aldi": { "price": 2.99, "brand": "Farmdale" }
+    },
+    {
+      "id": "free-range-eggs-12",
+      "name": "Free Range Eggs 12pk",
+      "category": "Dairy & Eggs",
+      "unit": "per dozen",
+      "woolworths": { "price": 7.50, "brand": "Woolworths" },
+      "coles": { "price": 5.99, "brand": "Coles" },
+      "aldi": { "price": 6.29, "brand": "Hahn" }
+    },
+    {
+      "id": "butter-500g",
+      "name": "Butter 500g",
+      "category": "Dairy & Eggs",
+      "unit": "per 500g",
+      "woolworths": { "price": 6.00, "brand": "Western Star" },
+      "coles": { "price": 5.50, "brand": "Western Star" },
+      "aldi": { "price": 4.99, "brand": "Beauti" }
+    },
+    {
+      "id": "tasty-cheese-block-500g",
+      "name": "Tasty Cheese Block 500g",
+      "category": "Dairy & Eggs",
+      "unit": "per 500g",
+      "woolworths": { "price": 8.00, "brand": "Bega" },
+      "coles": { "price": 7.50, "brand": "Bega" },
+      "aldi": { "price": 6.79, "brand": "Westacre" }
+    },
+    {
+      "id": "greek-yoghurt-500g",
+      "name": "Greek Yoghurt 500g",
+      "category": "Dairy & Eggs",
+      "unit": "per 500g",
+      "woolworths": { "price": 5.00, "brand": "Chobani" },
+      "coles": { "price": 4.50, "brand": "Chobani" },
+      "aldi": { "price": 3.99, "brand": "Farmer's Choice" }
+    },
+    {
+      "id": "sliced-cheese-200g",
+      "name": "Sliced Cheese 200g",
+      "category": "Dairy & Eggs",
+      "unit": "per 200g",
+      "woolworths": { "price": 5.50, "brand": "Bega" },
+      "coles": { "price": 4.19, "brand": "Coles" },
+      "aldi": { "price": 4.49, "brand": "Westacre" }
+    },
+    {
+      "id": "white-bread-700g",
+      "name": "White Sandwich Bread 700g",
+      "category": "Bread & Bakery",
+      "unit": "per 700g",
+      "woolworths": { "price": 3.50, "brand": "Wonder White" },
+      "coles": { "price": 3.00, "brand": "Wonder White" },
+      "aldi": { "price": 1.99, "brand": "Baker's Life" }
+    },
+    {
+      "id": "wholemeal-bread-700g",
+      "name": "Wholemeal Bread 700g",
+      "category": "Bread & Bakery",
+      "unit": "per 700g",
+      "woolworths": { "price": 4.00, "brand": "Tip Top" },
+      "coles": { "price": 3.50, "brand": "Tip Top" },
+      "aldi": { "price": 2.49, "brand": "Baker's Life" }
+    },
+    {
+      "id": "bread-rolls-6pk",
+      "name": "Bread Rolls 6pk",
+      "category": "Bread & Bakery",
+      "unit": "per 6 pack",
+      "woolworths": { "price": 3.20, "brand": "Woolworths" },
+      "coles": { "price": 2.00, "brand": "Coles" },
+      "aldi": { "price": 2.29, "brand": "Baker's Life" }
+    },
+    {
+      "id": "sourdough-loaf",
+      "name": "Sourdough Loaf",
+      "category": "Bread & Bakery",
+      "unit": "per loaf",
+      "woolworths": { "price": 5.50, "brand": "Woolworths" },
+      "coles": { "price": 5.00, "brand": "Coles" },
+      "aldi": { "price": 4.49, "brand": "Baker's Life" }
+    },
+    {
+      "id": "chicken-breast-1kg",
+      "name": "Chicken Breast Fillets 1kg",
+      "category": "Meat & Seafood",
+      "unit": "per kg",
+      "woolworths": { "price": 9.99, "brand": "Woolworths" },
+      "coles": { "price": 11.00, "brand": "Coles" },
+      "aldi": { "price": 10.49, "brand": "Brookdale" }
+    },
+    {
+      "id": "beef-mince-500g",
+      "name": "Beef Mince 500g",
+      "category": "Meat & Seafood",
+      "unit": "per 500g",
+      "woolworths": { "price": 8.00, "brand": "Woolworths" },
+      "coles": { "price": 6.49, "brand": "Coles" },
+      "aldi": { "price": 6.99, "brand": "Brookdale" }
+    },
+    {
+      "id": "pork-rashers-500g",
+      "name": "Pork Rashers 500g",
+      "category": "Meat & Seafood",
+      "unit": "per 500g",
+      "woolworths": { "price": 7.49, "brand": "Woolworths" },
+      "coles": { "price": 8.50, "brand": "Coles" },
+      "aldi": { "price": 7.99, "brand": "Brookdale" }
+    },
+    {
+      "id": "middle-bacon-250g",
+      "name": "Middle Bacon 250g",
+      "category": "Meat & Seafood",
+      "unit": "per 250g",
+      "woolworths": { "price": 7.00, "brand": "Woolworths" },
+      "coles": { "price": 6.50, "brand": "Coles" },
+      "aldi": { "price": 5.99, "brand": "Brookdale" }
+    },
+    {
+      "id": "beef-sausages-500g",
+      "name": "Beef Sausages 500g",
+      "category": "Meat & Seafood",
+      "unit": "per 500g",
+      "woolworths": { "price": 6.50, "brand": "Woolworths" },
+      "coles": { "price": 6.00, "brand": "Coles" },
+      "aldi": { "price": 5.49, "brand": "Brookdale" }
+    },
+    {
+      "id": "tuna-spring-water-95g",
+      "name": "Tuna in Spring Water 95g",
+      "category": "Meat & Seafood",
+      "unit": "per 95g tin",
+      "woolworths": { "price": 2.20, "brand": "Sirena" },
+      "coles": { "price": 2.00, "brand": "Sirena" },
+      "aldi": { "price": 1.79, "brand": "Fremont" }
+    },
+    {
+      "id": "frozen-salmon-2pk",
+      "name": "Frozen Atlantic Salmon 2pk",
+      "category": "Meat & Seafood",
+      "unit": "per 2 fillets (~300g)",
+      "woolworths": { "price": 11.00, "brand": "Woolworths" },
+      "coles": { "price": 10.50, "brand": "Coles" },
+      "aldi": { "price": 9.49, "brand": "Sea Cuisine" }
+    },
+    {
+      "id": "white-rice-1kg",
+      "name": "Long Grain White Rice 1kg",
+      "category": "Pantry",
+      "unit": "per 1kg",
+      "woolworths": { "price": 2.80, "brand": "SunRice" },
+      "coles": { "price": 2.50, "brand": "SunRice" },
+      "aldi": { "price": 1.99, "brand": "Priano" }
+    },
+    {
+      "id": "penne-pasta-500g",
+      "name": "Penne Pasta 500g",
+      "category": "Pantry",
+      "unit": "per 500g",
+      "woolworths": { "price": 2.20, "brand": "Woolworths" },
+      "coles": { "price": 1.90, "brand": "Coles" },
+      "aldi": { "price": 1.49, "brand": "Priano" }
+    },
+    {
+      "id": "crushed-tomatoes-400g",
+      "name": "Crushed Tomatoes 400g",
+      "category": "Pantry",
+      "unit": "per 400g tin",
+      "woolworths": { "price": 1.70, "brand": "Woolworths" },
+      "coles": { "price": 1.40, "brand": "Coles" },
+      "aldi": { "price": 0.99, "brand": "Remano" }
+    },
+    {
+      "id": "tomato-sauce-500ml",
+      "name": "Tomato Sauce 500mL",
+      "category": "Pantry",
+      "unit": "per 500mL",
+      "woolworths": { "price": 3.80, "brand": "Heinz" },
+      "coles": { "price": 3.20, "brand": "Heinz" },
+      "aldi": { "price": 2.49, "brand": "Remano" }
+    },
+    {
+      "id": "olive-oil-750ml",
+      "name": "Extra Virgin Olive Oil 750mL",
+      "category": "Pantry",
+      "unit": "per 750mL",
+      "woolworths": { "price": 10.00, "brand": "Cobram Estate" },
+      "coles": { "price": 9.50, "brand": "Cobram Estate" },
+      "aldi": { "price": 8.49, "brand": "Carlini" }
+    },
+    {
+      "id": "plain-flour-1kg",
+      "name": "Plain Flour 1kg",
+      "category": "Pantry",
+      "unit": "per 1kg",
+      "woolworths": { "price": 2.50, "brand": "White Wings" },
+      "coles": { "price": 2.20, "brand": "White Wings" },
+      "aldi": { "price": 1.79, "brand": "Baker's Mix" }
+    },
+    {
+      "id": "white-sugar-1kg",
+      "name": "White Sugar 1kg",
+      "category": "Pantry",
+      "unit": "per 1kg",
+      "woolworths": { "price": 2.60, "brand": "CSR" },
+      "coles": { "price": 2.40, "brand": "CSR" },
+      "aldi": { "price": 1.99, "brand": "Baker's Mix" }
+    },
+    {
+      "id": "peanut-butter-375g",
+      "name": "Peanut Butter Crunchy 375g",
+      "category": "Pantry",
+      "unit": "per 375g",
+      "woolworths": { "price": 5.50, "brand": "Kraft" },
+      "coles": { "price": 5.00, "brand": "Kraft" },
+      "aldi": { "price": 4.29, "brand": "Bakers Life" }
+    },
+    {
+      "id": "rolled-oats-1kg",
+      "name": "Rolled Oats 1kg",
+      "category": "Breakfast",
+      "unit": "per 1kg",
+      "woolworths": { "price": 4.50, "brand": "Uncle Tobys" },
+      "coles": { "price": 4.00, "brand": "Uncle Tobys" },
+      "aldi": { "price": 2.99, "brand": "Harvest Morn" }
+    },
+    {
+      "id": "weet-bix-750g",
+      "name": "Weet-Bix 750g",
+      "category": "Breakfast",
+      "unit": "per 750g",
+      "woolworths": { "price": 6.00, "brand": "Sanitarium" },
+      "coles": { "price": 5.50, "brand": "Sanitarium" },
+      "aldi": { "price": 4.79, "brand": "Harvest Morn" }
+    },
+    {
+      "id": "corn-flakes-500g",
+      "name": "Corn Flakes 500g",
+      "category": "Breakfast",
+      "unit": "per 500g",
+      "woolworths": { "price": 4.80, "brand": "Kellogg's" },
+      "coles": { "price": 4.30, "brand": "Kellogg's" },
+      "aldi": { "price": 3.49, "brand": "Harvest Morn" }
+    },
+    {
+      "id": "muesli-500g",
+      "name": "Fruit & Nut Muesli 500g",
+      "category": "Breakfast",
+      "unit": "per 500g",
+      "woolworths": { "price": 5.50, "brand": "Uncle Tobys" },
+      "coles": { "price": 5.00, "brand": "Uncle Tobys" },
+      "aldi": { "price": 4.29, "brand": "Harvest Morn" }
+    },
+    {
+      "id": "bananas-1kg",
+      "name": "Bananas",
+      "category": "Fresh Produce",
+      "unit": "per kg",
+      "woolworths": { "price": 3.80, "brand": "Loose" },
+      "coles": { "price": 3.50, "brand": "Loose" },
+      "aldi": { "price": 3.19, "brand": "Loose" }
+    },
+    {
+      "id": "pink-lady-apples-1kg",
+      "name": "Pink Lady Apples",
+      "category": "Fresh Produce",
+      "unit": "per kg",
+      "woolworths": { "price": 5.50, "brand": "Loose" },
+      "coles": { "price": 5.00, "brand": "Loose" },
+      "aldi": { "price": 4.49, "brand": "Loose" }
+    },
+    {
+      "id": "carrots-1kg",
+      "name": "Carrots 1kg",
+      "category": "Fresh Produce",
+      "unit": "per 1kg bag",
+      "woolworths": { "price": 2.00, "brand": "Woolworths" },
+      "coles": { "price": 1.80, "brand": "Coles" },
+      "aldi": { "price": 1.49, "brand": "Loose" }
+    },
+    {
+      "id": "brushed-potatoes-2kg",
+      "name": "Brushed Potatoes 2kg",
+      "category": "Fresh Produce",
+      "unit": "per 2kg bag",
+      "woolworths": { "price": 5.50, "brand": "Woolworths" },
+      "coles": { "price": 5.00, "brand": "Coles" },
+      "aldi": { "price": 4.49, "brand": "Loose" }
+    },
+    {
+      "id": "brown-onions-1kg",
+      "name": "Brown Onions 1kg",
+      "category": "Fresh Produce",
+      "unit": "per 1kg bag",
+      "woolworths": { "price": 3.20, "brand": "Woolworths" },
+      "coles": { "price": 2.90, "brand": "Coles" },
+      "aldi": { "price": 2.49, "brand": "Loose" }
+    },
+    {
+      "id": "loose-tomatoes-500g",
+      "name": "Tomatoes 500g",
+      "category": "Fresh Produce",
+      "unit": "per 500g",
+      "woolworths": { "price": 4.50, "brand": "Loose" },
+      "coles": { "price": 4.00, "brand": "Loose" },
+      "aldi": { "price": 3.49, "brand": "Loose" }
+    },
+    {
+      "id": "frozen-peas-1kg",
+      "name": "Frozen Peas 1kg",
+      "category": "Frozen",
+      "unit": "per 1kg bag",
+      "woolworths": { "price": 3.80, "brand": "Birds Eye" },
+      "coles": { "price": 3.30, "brand": "Birds Eye" },
+      "aldi": { "price": 2.69, "brand": "Farmland" }
+    },
+    {
+      "id": "frozen-mixed-veg-1kg",
+      "name": "Frozen Mixed Vegetables 1kg",
+      "category": "Frozen",
+      "unit": "per 1kg bag",
+      "woolworths": { "price": 3.80, "brand": "Birds Eye" },
+      "coles": { "price": 3.30, "brand": "Birds Eye" },
+      "aldi": { "price": 2.69, "brand": "Farmland" }
+    },
+    {
+      "id": "oven-chips-1kg",
+      "name": "Oven Chips / Fries 1kg",
+      "category": "Frozen",
+      "unit": "per 1kg bag",
+      "woolworths": { "price": 4.80, "brand": "McCain" },
+      "coles": { "price": 4.30, "brand": "McCain" },
+      "aldi": { "price": 3.49, "brand": "Farmland" }
+    },
+    {
+      "id": "potato-chips-175g",
+      "name": "Potato Chips 175g",
+      "category": "Snacks",
+      "unit": "per 175g bag",
+      "woolworths": { "price": 4.80, "brand": "Smiths" },
+      "coles": { "price": 4.30, "brand": "Smiths" },
+      "aldi": { "price": 3.19, "brand": "Savoritz" }
+    },
+    {
+      "id": "choc-block-200g",
+      "name": "Milk Chocolate Block 200g",
+      "category": "Snacks",
+      "unit": "per 200g",
+      "woolworths": { "price": 4.80, "brand": "Cadbury" },
+      "coles": { "price": 4.30, "brand": "Cadbury" },
+      "aldi": { "price": 3.49, "brand": "Choceur" }
+    },
+    {
+      "id": "plain-crackers-200g",
+      "name": "Plain Crackers 200g",
+      "category": "Snacks",
+      "unit": "per 200g",
+      "woolworths": { "price": 2.80, "brand": "Woolworths" },
+      "coles": { "price": 2.50, "brand": "Coles" },
+      "aldi": { "price": 1.99, "brand": "Savoritz" }
+    },
+    {
+      "id": "muesli-bars-6pk",
+      "name": "Muesli Bars 6pk",
+      "category": "Snacks",
+      "unit": "per 6 pack",
+      "woolworths": { "price": 4.50, "brand": "Uncle Tobys" },
+      "coles": { "price": 4.00, "brand": "Uncle Tobys" },
+      "aldi": { "price": 3.29, "brand": "Harvest Morn" }
+    },
+    {
+      "id": "instant-coffee-100g",
+      "name": "Instant Coffee 100g",
+      "category": "Beverages",
+      "unit": "per 100g",
+      "woolworths": { "price": 8.50, "brand": "Nescafé" },
+      "coles": { "price": 8.00, "brand": "Nescafé" },
+      "aldi": { "price": 6.99, "brand": "Lazzio" }
+    },
+    {
+      "id": "tea-bags-100pk",
+      "name": "Tea Bags 100pk",
+      "category": "Beverages",
+      "unit": "per 100 bags",
+      "woolworths": { "price": 4.80, "brand": "Lipton" },
+      "coles": { "price": 4.30, "brand": "Lipton" },
+      "aldi": { "price": 3.49, "brand": "Diplomat" }
+    },
+    {
+      "id": "orange-juice-2l",
+      "name": "Orange Juice 2L",
+      "category": "Beverages",
+      "unit": "per 2L",
+      "woolworths": { "price": 5.50, "brand": "Daily Juice" },
+      "coles": { "price": 3.99, "brand": "Coles" },
+      "aldi": { "price": 4.29, "brand": "Country Road" }
+    },
+    {
+      "id": "sparkling-water-1-25l",
+      "name": "Sparkling Mineral Water 1.25L",
+      "category": "Beverages",
+      "unit": "per 1.25L bottle",
+      "woolworths": { "price": 2.00, "brand": "Woolworths" },
+      "coles": { "price": 1.80, "brand": "Coles" },
+      "aldi": { "price": 1.39, "brand": "Lochhead" }
+    },
+    {
+      "id": "toilet-paper-12pk",
+      "name": "Toilet Paper 12 Rolls",
+      "category": "Household",
+      "unit": "12 double-length rolls",
+      "woolworths": { "price": 13.00, "brand": "Quilton" },
+      "coles": { "price": 12.00, "brand": "Quilton" },
+      "aldi": { "price": 10.49, "brand": "Confidence" }
+    },
+    {
+      "id": "dishwashing-liquid-900ml",
+      "name": "Dishwashing Liquid 900mL",
+      "category": "Household",
+      "unit": "per 900mL",
+      "woolworths": { "price": 5.50, "brand": "Morning Fresh" },
+      "coles": { "price": 5.00, "brand": "Morning Fresh" },
+      "aldi": { "price": 3.79, "brand": "Tandil" }
+    },
+    {
+      "id": "laundry-powder-2kg",
+      "name": "Laundry Powder 2kg",
+      "category": "Household",
+      "unit": "per 2kg",
+      "woolworths": { "price": 13.00, "brand": "Cold Power" },
+      "coles": { "price": 12.00, "brand": "Cold Power" },
+      "aldi": { "price": 9.99, "brand": "Trimat" }
+    }
+  ]
+}

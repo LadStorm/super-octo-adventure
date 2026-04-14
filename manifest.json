@@ -1,11 +1,11 @@
 {
-  "name": "YT Transcript",
-  "short_name": "YT Transcript",
-  "description": "Fetch YouTube video transcripts",
+  "name": "GroceryCompare AU",
+  "short_name": "GroceryCompare",
+  "description": "Compare grocery prices across Woolworths, Coles & ALDI",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0f0f0f",
-  "theme_color": "#ff0000",
+  "background_color": "#f0f4f0",
+  "theme_color": "#16a34a",
   "orientation": "portrait",
   "icons": [
     {
