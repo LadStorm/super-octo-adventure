@@ -4,419 +4,715 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="YT Transcript">
-  <meta name="theme-color" content="#ff0000">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="GroceryCompare">
+  <meta name="theme-color" content="#16a34a">
   <link rel="manifest" href="manifest.json">
-  <title>YT Transcript</title>
+  <title>GroceryCompare AU</title>
   <style>
+    :root {
+      --bg: #f0f4f0;
+      --card: #ffffff;
+      --border: #e2e8e2;
+      --text: #1a2e1a;
+      --muted: #64786a;
+      --radius: 12px;
+      --ww-dark: #1b5e20;
+      --ww-mid: #2e7d32;
+      --ww-light: #e8f5e9;
+      --coles-dark: #b71c1c;
+      --coles-mid: #c62828;
+      --coles-light: #ffebee;
+      --aldi-dark: #0d47a1;
+      --aldi-mid: #1565c0;
+      --aldi-light: #e3f2fd;
+      --best-bg: #dcfce7;
+      --best-text: #14532d;
+      --best-border: #86efac;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --red: #ff0000;
-      --dark: #0f0f0f;
-      --card: #1a1a1a;
-      --border: #2a2a2a;
-      --text: #f1f1f1;
-      --muted: #aaa;
-      --radius: 12px;
-    }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--dark);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
       color: var(--text);
       min-height: 100dvh;
-      padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
     }
 
+    /* ── Header ── */
     header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .header-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 16px 16px 0;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    header svg { flex-shrink: 0; }
-
-    header h1 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-
-    header h1 span { color: var(--red); }
-
-    .input-area {
-      padding: 16px;
+    .logo {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 9px;
     }
 
-    input[type="text"] {
-      flex: 1;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
       color: var(--text);
-      font-size: 1rem;
-      padding: 12px 14px;
+    }
+
+    h1 span { color: #16a34a; }
+
+    .postcode-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .postcode-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    #postcodeInput {
+      width: 76px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: var(--bg);
       outline: none;
+      color: var(--text);
       -webkit-appearance: none;
     }
 
-    input[type="text"]:focus {
-      border-color: var(--red);
-    }
+    #postcodeInput:focus { border-color: #16a34a; }
 
-    input[type="text"]::placeholder { color: var(--muted); }
-
-    button#fetchBtn {
-      background: var(--red);
-      border: none;
-      border-radius: var(--radius);
-      color: #fff;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 12px 18px;
-      white-space: nowrap;
-      -webkit-tap-highlight-color: transparent;
-      transition: opacity 0.15s;
-    }
-
-    button#fetchBtn:active { opacity: 0.75; }
-    button#fetchBtn:disabled { opacity: 0.45; cursor: default; }
-
-    #status {
-      font-size: 0.85rem;
-      color: var(--muted);
-      padding: 0 16px 10px;
-      min-height: 1.2em;
-    }
-
-    #status.error { color: #ff6b6b; }
-
-    .toolbar {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      padding: 0 16px 12px;
-    }
-
-    .toolbar.visible { display: flex; }
-
-    .toolbar-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      flex: 1;
-    }
-
-    button.tb {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      cursor: pointer;
-      font-size: 0.8rem;
-      padding: 6px 12px;
-      -webkit-tap-highlight-color: transparent;
-      transition: background 0.15s;
-    }
-
-    button.tb:active { background: var(--border); }
-
-    #transcript {
-      padding: 0 16px 32px;
-      display: none;
-    }
-
-    #transcript.visible { display: block; }
-
-    .segment {
+    .btn-refresh {
       display: flex;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
+      align-items: center;
+      gap: 5px;
+      padding: 6px 13px;
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
       cursor: pointer;
+      transition: background 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .segment:last-child { border-bottom: none; }
+    .btn-refresh:hover { background: #15803d; }
+    .btn-refresh:active { background: #166534; }
+    .btn-refresh:disabled { opacity: 0.5; cursor: default; }
 
-    .segment:active .seg-text { color: var(--red); }
+    #lastUpdated {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-    .timestamp {
-      color: var(--red);
-      font-size: 0.78rem;
-      font-variant-numeric: tabular-nums;
-      min-width: 44px;
-      padding-top: 2px;
+    .staleness-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
       flex-shrink: 0;
     }
 
-    .seg-text {
-      font-size: 0.95rem;
-      line-height: 1.5;
-      transition: color 0.1s;
+    /* ── Main ── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px;
     }
 
-    .plain-text {
-      background: var(--card);
-      border: 1px solid var(--border);
+    /* ── Savings Banner ── */
+    .savings-banner {
+      background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+      color: #fff;
       border-radius: var(--radius);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      padding: 14px;
-      width: 100%;
-      resize: vertical;
-      min-height: 200px;
-      display: none;
+      padding: 16px 20px;
+      margin-bottom: 14px;
     }
 
-    .plain-text.visible { display: block; }
+    .savings-headline {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .savings-sub {
+      font-size: 0.82rem;
+      opacity: 0.85;
+      margin-top: 3px;
+    }
+
+    .store-compare-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .store-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    /* ── Store Cards ── */
+    .store-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 580px) {
+      .store-cards { grid-template-columns: 1fr; }
+    }
+
+    .store-card {
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    .store-card.ww  { border-color: var(--ww-mid); }
+    .store-card.coles { border-color: var(--coles-mid); }
+    .store-card.aldi  { border-color: var(--aldi-mid); }
+
+    .store-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 13px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .store-card.ww   .store-card-head { background: var(--ww-mid); }
+    .store-card.coles .store-card-head { background: var(--coles-mid); }
+    .store-card.aldi  .store-card-head { background: var(--aldi-mid); }
+
+    .sc-name  { font-size: 0.9rem; }
+    .sc-count { font-size: 0.72rem; opacity: 0.88; background: rgba(0,0,0,0.18); border-radius: 10px; padding: 2px 7px; }
+
+    .store-card-body { padding: 11px 13px; }
+
+    .sc-total { font-size: 1.25rem; font-weight: 800; }
+    .sc-note  { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    .sc-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      border-top: 1px solid var(--border);
+      padding: 8px 0 0;
+      margin-top: 9px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      color: var(--muted);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sc-toggle:hover { color: var(--text); }
+
+    .sc-list {
+      display: none;
+      padding-top: 8px;
+      margin-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sc-list.open { display: block; }
+
+    .sc-list-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3px 0;
+      font-size: 0.78rem;
+      gap: 8px;
+    }
+
+    .sc-list-row .scl-name { color: var(--text); flex: 1; }
+    .sc-list-row .scl-price { color: var(--muted); font-weight: 600; white-space: nowrap; }
+
+    /* ── Category Tabs ── */
+    .cat-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .cat-tabs::-webkit-scrollbar { display: none; }
+
+    .cat-tab {
+      padding: 6px 13px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .cat-tab.active { background: #16a34a; color: #fff; border-color: #16a34a; }
+    .cat-tab:hover:not(.active) { border-color: #16a34a; color: #16a34a; }
+
+    /* ── Price Table ── */
+    .table-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .table-scroll { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+    }
+
+    thead th {
+      padding: 11px 13px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+
+    thead th:first-child { text-align: left; min-width: 170px; }
+    thead .th-ww    { background: var(--ww-light);   color: var(--ww-dark); }
+    thead .th-coles { background: var(--coles-light); color: var(--coles-dark); }
+    thead .th-aldi  { background: var(--aldi-light);  color: var(--aldi-dark); }
+
+    tr.cat-row td {
+      background: var(--bg);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--muted);
+      padding: 7px 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    tr.item-row td {
+      padding: 9px 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    tr.item-row:last-child td { border-bottom: none; }
+    tr.item-row:hover { background: #f7faf7; }
+
+    .item-name { font-size: 0.88rem; font-weight: 600; }
+    .item-unit { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+
+    .price-cell { text-align: center; min-width: 95px; }
+
+    .price-val { font-size: 0.92rem; font-weight: 600; }
+
+    .price-cell.best { background: var(--best-bg); }
+    .price-cell.best .price-val { color: var(--best-text); }
+
+    .best-tag {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--best-text);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-top: 1px;
+    }
+
+    .price-na { color: #ccc; font-size: 0.85rem; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 24px 16px 32px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    footer a { color: var(--muted); }
+
+    /* ── Loading / Error ── */
+    .state-msg {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
 
     .spinner {
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 20px; height: 20px;
       border: 2px solid var(--border);
-      border-top-color: var(--red);
+      border-top-color: #16a34a;
       border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+      animation: spin 0.65s linear infinite;
       vertical-align: middle;
-      margin-right: 6px;
+      margin-right: 8px;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin-btn { to { transform: rotate(360deg); } }
+    .btn-refresh.loading svg { animation: spin-btn 0.65s linear infinite; }
   </style>
 </head>
 <body>
 
 <header>
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-    <rect width="28" height="28" rx="7" fill="#ff0000"/>
-    <polygon points="11,8 21,14 11,20" fill="white"/>
-  </svg>
-  <h1>YT <span>Transcript</span></h1>
+  <div class="header-row">
+    <div class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <rect width="30" height="30" rx="8" fill="#16a34a"/>
+        <path d="M5 8h2.5L11 20h11l2.5-8.5H9" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12.5" cy="23" r="1.5" fill="white"/>
+        <circle cx="19.5" cy="23" r="1.5" fill="white"/>
+      </svg>
+      <h1>Grocery<span>Compare</span></h1>
+    </div>
+    <div class="postcode-row">
+      <span class="postcode-label">Postcode</span>
+      <input id="postcodeInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="e.g. 3000">
+      <button class="btn-refresh" id="refreshBtn" onclick="refresh()">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11.5 6.5A5 5 0 1 1 6.5 1.5v2M6.5 1.5l1.8-1.8M6.5 1.5l1.8 1.8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+  <div id="lastUpdated"></div>
 </header>
 
-<div class="input-area">
-  <input type="text" id="urlInput" placeholder="YouTube URL or video ID" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="url">
-  <button id="fetchBtn" onclick="fetchTranscript()">Get</button>
-</div>
+<main id="main">
+  <div class="state-msg"><span class="spinner"></span>Loading prices…</div>
+</main>
 
-<div id="status"></div>
-
-<div class="toolbar" id="toolbar">
-  <span class="toolbar-label" id="segCount"></span>
-  <button class="tb" id="viewToggle" onclick="toggleView()">Plain text</button>
-  <button class="tb" onclick="copyText()">Copy</button>
-</div>
-
-<div id="transcript"></div>
-<textarea class="plain-text" id="plainText" readonly></textarea>
+<footer>
+  Prices are approximate national averages · Always verify at the store · Prices vary by location &amp; specials<br>
+  Data sourced manually · <span id="footerUpdated"></span>
+</footer>
 
 <script>
-const PROXY = 'https://api.allorigins.win/get?url=';
+const STORES = ['woolworths', 'coles', 'aldi'];
+const STORE_LABELS = { woolworths: 'Woolworths', coles: 'Coles', aldi: 'ALDI' };
+const STORE_CLASS  = { woolworths: 'ww', coles: 'coles', aldi: 'aldi' };
 
-function extractVideoId(input) {
-  input = input.trim();
-  // Plain ID (11 chars, alphanumeric + - _)
-  if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
-  try {
-    const url = new URL(input.startsWith('http') ? input : 'https://' + input);
-    if (url.hostname.includes('youtu.be')) return url.pathname.slice(1).split(/[?&]/)[0];
-    if (url.hostname.includes('youtube.com')) {
-      const v = url.searchParams.get('v');
-      if (v) return v;
-      // shorts
-      const m = url.pathname.match(/\/shorts\/([a-zA-Z0-9_-]{11})/);
-      if (m) return m[1];
-    }
-  } catch (_) {}
-  // Fallback regex
-  const m = input.match(/(?:v=|youtu\.be\/|\/shorts\/)([a-zA-Z0-9_-]{11})/);
-  return m ? m[1] : null;
-}
+let priceData   = null;
+let activeCategory = 'all';
 
-function formatTime(secs) {
-  const s = Math.floor(secs);
-  const h = Math.floor(s / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const sec = s % 60;
-  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-  return `${m}:${String(sec).padStart(2,'0')}`;
-}
+// ── Init ────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('postcode');
+  if (saved) document.getElementById('postcodeInput').value = saved;
 
-function setStatus(msg, isError = false) {
-  const el = document.getElementById('status');
-  el.innerHTML = msg;
-  el.className = isError ? 'error' : '';
-}
-
-function decodeHTML(str) {
-  return str
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&#x27;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n))
-    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)));
-}
-
-let segments = [];
-let viewMode = 'timed'; // 'timed' | 'plain'
-
-async function fetchTranscript() {
-  const input = document.getElementById('urlInput').value;
-  const videoId = extractVideoId(input);
-
-  if (!videoId) {
-    setStatus('Invalid YouTube URL or video ID.', true);
-    return;
-  }
-
-  const btn = document.getElementById('fetchBtn');
-  btn.disabled = true;
-  document.getElementById('toolbar').classList.remove('visible');
-  document.getElementById('transcript').classList.remove('visible');
-  document.getElementById('plainText').classList.remove('visible');
-  segments = [];
-
-  setStatus('<span class="spinner"></span>Fetching video page…');
-
-  try {
-    const pageUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    const proxyRes = await fetch(PROXY + encodeURIComponent(pageUrl));
-    if (!proxyRes.ok) throw new Error('Proxy error ' + proxyRes.status);
-    const data = await proxyRes.json();
-    const html = data.contents;
-
-    // Extract ytInitialPlayerResponse
-    const match = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\})\s*;/s);
-    if (!match) throw new Error('Could not parse video page. The video may be private or unavailable.');
-
-    let player;
-    try { player = JSON.parse(match[1]); }
-    catch (_) { throw new Error('Failed to parse player data.'); }
-
-    const captions = player?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-    if (!captions || captions.length === 0) {
-      throw new Error('No transcript available for this video.');
-    }
-
-    // Prefer manual English, then auto English, then first available
-    const preferred = captions.find(c => c.languageCode === 'en' && !c.kind) ||
-                      captions.find(c => c.languageCode === 'en') ||
-                      captions[0];
-
-    const trackUrl = preferred.baseUrl;
-    const trackName = preferred.name?.simpleText || preferred.languageCode;
-
-    setStatus(`<span class="spinner"></span>Fetching transcript (${trackName})…`);
-
-    const trackRes = await fetch(PROXY + encodeURIComponent(trackUrl));
-    if (!trackRes.ok) throw new Error('Failed to fetch transcript track.');
-    const trackData = await trackRes.json();
-    const xml = trackData.contents;
-
-    // Parse XML transcript
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xml, 'text/xml');
-    const textNodes = doc.querySelectorAll('text');
-
-    if (textNodes.length === 0) throw new Error('Transcript is empty.');
-
-    segments = Array.from(textNodes).map(node => ({
-      start: parseFloat(node.getAttribute('start') || '0'),
-      dur: parseFloat(node.getAttribute('dur') || '0'),
-      text: decodeHTML(node.textContent || '').replace(/\n/g, ' ').trim()
-    })).filter(s => s.text);
-
-    renderTranscript(videoId);
-    setStatus(`${segments.length} segments · ${trackName}`);
-
-  } catch (err) {
-    setStatus(err.message || 'Something went wrong.', true);
-  } finally {
-    btn.disabled = false;
-  }
-}
-
-function renderTranscript(videoId) {
-  const container = document.getElementById('transcript');
-  container.innerHTML = '';
-
-  segments.forEach(seg => {
-    const div = document.createElement('div');
-    div.className = 'segment';
-    div.innerHTML = `<span class="timestamp">${formatTime(seg.start)}</span><span class="seg-text">${escapeHTML(seg.text)}</span>`;
-    div.addEventListener('click', () => {
-      const t = Math.floor(seg.start);
-      window.open(`https://youtu.be/${videoId}?t=${t}`, '_blank');
-    });
-    container.appendChild(div);
+  document.getElementById('postcodeInput').addEventListener('change', e => {
+    localStorage.setItem('postcode', e.target.value.trim());
   });
 
-  container.classList.add('visible');
-
-  const plain = segments.map(s => s.text).join(' ');
-  document.getElementById('plainText').value = plain;
-
-  document.getElementById('segCount').textContent = `${segments.length} segments`;
-  document.getElementById('toolbar').classList.add('visible');
-  document.getElementById('viewToggle').textContent = 'Plain text';
-  viewMode = 'timed';
-}
-
-function escapeHTML(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function toggleView() {
-  const tContainer = document.getElementById('transcript');
-  const pContainer = document.getElementById('plainText');
-  const btn = document.getElementById('viewToggle');
-
-  if (viewMode === 'timed') {
-    tContainer.classList.remove('visible');
-    pContainer.classList.add('visible');
-    btn.textContent = 'Timed view';
-    viewMode = 'plain';
-  } else {
-    pContainer.classList.remove('visible');
-    tContainer.classList.add('visible');
-    btn.textContent = 'Plain text';
-    viewMode = 'timed';
-  }
-}
-
-async function copyText() {
-  const text = segments.map(s => s.text).join(' ');
-  try {
-    await navigator.clipboard.writeText(text);
-    const btn = event.target;
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 1500);
-  } catch (_) {
-    // fallback: select the textarea
-    toggleView();
-    const ta = document.getElementById('plainText');
-    ta.select();
-    document.execCommand('copy');
-  }
-}
-
-// Allow Enter key to submit
-document.getElementById('urlInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') fetchTranscript();
+  loadPrices();
 });
+
+// ── Data loading ────────────────────────────────
+async function loadPrices() {
+  const btn = document.getElementById('refreshBtn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  try {
+    const res = await fetch(`prices.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    priceData = await res.json();
+    render();
+  } catch (err) {
+    document.getElementById('main').innerHTML =
+      `<div class="state-msg" style="color:#c62828">
+         Failed to load prices: ${escHtml(err.message)}<br>
+         <button class="btn-refresh" style="margin-top:12px" onclick="refresh()">Try again</button>
+       </div>`;
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+
+function refresh() { loadPrices(); }
+
+// ── Main render ─────────────────────────────────
+function render() {
+  if (!priceData) return;
+
+  updateTimestamp();
+
+  const categories = ['all', ...getCategories(priceData.items)];
+  const gameplan   = calcGameplan(priceData.items);
+
+  document.getElementById('main').innerHTML =
+    renderBanner(gameplan) +
+    renderStoreCards(gameplan) +
+    renderCatTabs(categories) +
+    `<div class="table-card"><div class="table-scroll"><table>` +
+      renderTableHead() +
+      `<tbody id="tbody">` + renderRows(priceData.items, activeCategory) + `</tbody>` +
+    `</table></div></div>`;
+
+  // Category tab events
+  document.querySelectorAll('.cat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      activeCategory = tab.dataset.cat;
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tbody').innerHTML =
+        renderRows(priceData.items, activeCategory);
+    });
+  });
+
+  // Store card toggle events
+  document.querySelectorAll('.sc-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const store = btn.dataset.store;
+      const list  = document.getElementById(`sc-list-${store}`);
+      const open  = list.classList.toggle('open');
+      btn.querySelector('.sc-chevron').textContent = open ? '▲ Hide' : '▼ Show';
+    });
+  });
+}
+
+// ── Timestamp ───────────────────────────────────
+function updateTimestamp() {
+  const updated = new Date(priceData.lastUpdated);
+  const now     = new Date();
+  const ageH    = (now - updated) / 36e5;
+  const fresh   = ageH < 24;
+  const stale   = ageH > 168; // >7 days
+
+  const dot   = fresh ? '#22c55e' : stale ? '#ef4444' : '#f59e0b';
+  const label = fresh ? 'fresh' : stale ? 'outdated' : 'recent';
+  const str   = updated.toLocaleString('en-AU', {
+    day: 'numeric', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+  });
+
+  document.getElementById('lastUpdated').innerHTML =
+    `<span class="staleness-dot" style="background:${dot}" title="${label}"></span>
+     Prices last updated: ${str}`;
+  document.getElementById('footerUpdated').textContent = `Last updated ${str}`;
+}
+
+// ── Gameplan calculation ─────────────────────────
+function calcGameplan(items) {
+  const plans  = { woolworths: [], coles: [], aldi: [] };
+  let totals   = { woolworths: 0, coles: 0, aldi: 0 };
+  let optimal  = 0;
+  let wwAllIn  = 0;
+
+  items.forEach(item => {
+    const avail = STORES.filter(s => item[s]?.price != null);
+    if (!avail.length) return;
+
+    const minPrice = Math.min(...avail.map(s => item[s].price));
+
+    // Pick cheapest store (prefer ALDI on tie)
+    const cheapest = ['aldi','coles','woolworths'].find(s => item[s]?.price === minPrice);
+    plans[cheapest].push({ name: item.name, price: minPrice, unit: item.unit });
+    optimal += minPrice;
+
+    STORES.forEach(s => {
+      if (item[s]?.price) totals[s] += item[s].price;
+    });
+
+    if (item.woolworths?.price) wwAllIn += item.woolworths.price;
+  });
+
+  const savings    = wwAllIn - optimal;
+  const savingsPct = wwAllIn > 0 ? ((savings / wwAllIn) * 100).toFixed(0) : 0;
+  const vsColes    = totals.coles - optimal;
+
+  return { plans, totals, optimal, wwAllIn, savings, savingsPct, vsColes };
+}
+
+// ── Render helpers ───────────────────────────────
+function getCategories(items) {
+  return [...new Set(items.map(i => i.category))];
+}
+
+function fmt(price) {
+  return price != null ? `$${price.toFixed(2)}` : null;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Banner HTML ─────────────────────────────────
+function renderBanner(gp) {
+  return `
+  <div class="savings-banner">
+    <div class="savings-headline">Save ${fmt(gp.savings)} (${gp.savingsPct}%) on your basket</div>
+    <div class="savings-sub">Optimal split-shop vs buying everything at Woolworths · ${priceData.items.length} items tracked</div>
+    <div class="store-compare-row">
+      <span class="store-pill">Woolworths ${fmt(gp.totals.woolworths)}</span>
+      <span class="store-pill">Coles ${fmt(gp.totals.coles)}</span>
+      <span class="store-pill">ALDI ${fmt(gp.totals.aldi)}</span>
+      <span class="store-pill" style="background:rgba(255,255,255,0.32);font-weight:800">Optimal ${fmt(gp.optimal)}</span>
+    </div>
+  </div>`;
+}
+
+// ── Store Cards HTML ─────────────────────────────
+function renderStoreCards(gp) {
+  const postcode = document.getElementById('postcodeInput').value.trim();
+  const pcNote   = postcode ? `near ${postcode}` : 'national avg.';
+
+  return `<div class="store-cards">` +
+    STORES.map(store => {
+      const items = gp.plans[store];
+      const cls   = STORE_CLASS[store];
+      const total = items.reduce((s, i) => s + i.price, 0);
+      return `
+      <div class="store-card ${cls}">
+        <div class="store-card-head">
+          <span class="sc-name">${STORE_LABELS[store]}</span>
+          <span class="sc-count">${items.length} item${items.length !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="store-card-body">
+          <div class="sc-total">${fmt(total)}</div>
+          <div class="sc-note">Best price on ${items.length} items · ${pcNote}</div>
+          <button class="sc-toggle" data-store="${store}">
+            <span>What to buy here</span>
+            <span class="sc-chevron">▼ Show</span>
+          </button>
+          <div class="sc-list" id="sc-list-${store}">
+            ${items.map(i => `
+              <div class="sc-list-row">
+                <span class="scl-name">${escHtml(i.name)}</span>
+                <span class="scl-price">${fmt(i.price)}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    }).join('') +
+  `</div>`;
+}
+
+// ── Category Tabs HTML ───────────────────────────
+function renderCatTabs(categories) {
+  return `<div class="cat-tabs">` +
+    categories.map(cat => {
+      const label  = cat === 'all' ? 'All items' : cat;
+      const active = cat === activeCategory ? ' active' : '';
+      return `<button class="cat-tab${active}" data-cat="${escHtml(cat)}">${escHtml(label)}</button>`;
+    }).join('') +
+  `</div>`;
+}
+
+// ── Table Head HTML ──────────────────────────────
+function renderTableHead() {
+  return `<thead><tr>
+    <th>Item</th>
+    <th class="th-ww">Woolworths</th>
+    <th class="th-coles">Coles</th>
+    <th class="th-aldi">ALDI</th>
+  </tr></thead>`;
+}
+
+// ── Table Rows HTML ──────────────────────────────
+function renderRows(items, category) {
+  const filtered = category === 'all'
+    ? items
+    : items.filter(i => i.category === category);
+
+  // Group by category
+  const grouped = {};
+  filtered.forEach(item => {
+    if (!grouped[item.category]) grouped[item.category] = [];
+    grouped[item.category].push(item);
+  });
+
+  let html = '';
+  Object.entries(grouped).forEach(([cat, catItems]) => {
+    if (category === 'all') {
+      html += `<tr class="cat-row"><td colspan="4">${escHtml(cat)}</td></tr>`;
+    }
+    catItems.forEach(item => {
+      const prices = STORES.map(s => item[s]?.price ?? null);
+      const validPrices = prices.filter(p => p != null);
+      const minPrice = validPrices.length ? Math.min(...validPrices) : null;
+
+      html += `<tr class="item-row"><td>
+        <div class="item-name">${escHtml(item.name)}</div>
+        <div class="item-unit">${escHtml(item.unit)}</div>
+      </td>`;
+
+      STORES.forEach((store, i) => {
+        const p = prices[i];
+        if (p == null) {
+          html += `<td class="price-cell"><span class="price-na">N/A</span></td>`;
+        } else {
+          const isBest = p === minPrice;
+          html += `<td class="price-cell${isBest ? ' best' : ''}">
+            <span class="price-val">${fmt(p)}</span>
+            ${isBest ? `<span class="best-tag">★ Best</span>` : ''}
+          </td>`;
+        }
+      });
+
+      html += `</tr>`;
+    });
+  });
+
+  return html || `<tr><td colspan="4" style="padding:20px;text-align:center;color:var(--muted)">No items in this category.</td></tr>`;
+}
 </script>
+
 </body>
 </html>
