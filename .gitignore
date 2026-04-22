@@ -1,0 +1,13 @@
+# Student data — never commit real or scrambled data or keys
+input/
+output/
+*.csv
+*.xlsx
+*_key.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
